@@ -14,13 +14,25 @@
 		var entityType = queryParamsMap['entity'];
 		var entityId = queryParamsMap['id'];
 		var entityParentId = queryParamsMap['parentId'];
-		var link = "https://www.youtube.com";
-		if(entityType == 'user_profile')
+		
+		
+		
+			if(entityId.contains("::"))
+	{
+	        String appIds[]=entityId.split("::");
+	       	url="https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/"+appIds[0]+"/activity/ios/ratingsResponses?reviewId="+appIds[1];
+	}
+	else
+        {
+            	url="https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/"+entityId+"/activity/ios/ratingsResponses";
+        }
+		
+		
+		var link = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/";
+		
+		if(entityId.indexOf(::)!=-1)
 		{
-		        link = link + "/channel/" + entityId;
-		}
-		if(entityType == 'ticket')
-		{
+			var appIds=entityId.split("::");
 		        link = link + "/watch?v=" + entityId;
 		}
 		if(entityType == 'thread')
@@ -31,6 +43,8 @@
 		                link = link + "&lc=" + entityId;
 		        }
 		}
+		
+		
 		window.location.href=link;
 	</script>
 </body>
