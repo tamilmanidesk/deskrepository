@@ -11,37 +11,20 @@
 			var keyVal = param.split('=');
 			queryParamsMap[keyVal[0]] = keyVal[1];
 		});
-		var entityType = queryParamsMap['entity'];
+		
 		var entityId = queryParamsMap['id'];
-		var entityParentId = queryParamsMap['parentId'];
-		
-		
-		
-			if(entityId.contains("::"))
-	{
-	        String appIds[]=entityId.split("::");
-	       	url="https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/"+appIds[0]+"/activity/ios/ratingsResponses?reviewId="+appIds[1];
-	}
-	else
-        {
-            	url="https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/"+entityId+"/activity/ios/ratingsResponses";
-        }
-		
+			
 		
 		var link = "https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/";
 		
 		if(entityId.indexOf(::)!=-1)
 		{
-			var appIds=entityId.split("::");
-		        link = link + "/watch?v=" + entityId;
+			var appIdAndReviewId=entityId.split("::");
+		        link = link + appIdAndReviewId[0]+"/activity/ios/ratingsResponses?reviewId=" + appIdAndReviewId[1];
 		}
-		if(entityType == 'thread')
+		else
 		{
-		        link = link + "/watch?v=" + entityParentId;
-		        if(entityId != null)
-		        {
-		                link = link + "&lc=" + entityId;
-		        }
+			link = link + appIdAndReviewId[0]+"/activity/ios/ratingsResponses;
 		}
 		
 		
