@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Redirecting to Youtube...</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var queryParamsMap = {};
+		var params = window.location.href.split('?')[1].split('&');
+		params.forEach(function(param){
+			var keyVal = param.split('=');
+			queryParamsMap[keyVal[0]] = keyVal[1];
+		});
+		var entityType = queryParamsMap['entity'];
+		var entityId = queryParamsMap['id'];
+		var entityParentId = queryParamsMap['parentId'];
+		var link = "https://www.youtube.com";
+		if(entityType == 'user_profile')
+		{
+		        link = link + "/channel/" + entityId;
+		}
+		if(entityType == 'ticket')
+		{
+		        link = link + "/watch?v=" + entityId;
+		}
+		if(entityType == 'thread')
+		{
+		        link = link + "/watch?v=" + entityParentId;
+		        if(entityId != null)
+		        {
+		                link = link + "&lc=" + entityId;
+		        }
+		}
+		window.location.href=link;
+	</script>
+</body>
+</html>
